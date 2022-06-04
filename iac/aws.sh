@@ -1,0 +1,2 @@
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 254155377013.dkr.ecr.us-east-1.amazonaws.com
+docker build . --build-arg version=2.5.13 --build-arg target_path=$(pwd) -t demo
