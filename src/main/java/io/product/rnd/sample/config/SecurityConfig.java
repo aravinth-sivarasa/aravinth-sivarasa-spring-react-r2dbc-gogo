@@ -24,13 +24,24 @@ public class SecurityConfig {
 
         @Bean
         SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) {
-                return http.authorizeExchange()
-                                .anyExchange().authenticated()
-                                .and()
-                                .formLogin().and().//
-                                logout().logoutSuccessHandler(logoutSuccessHandler()).and().csrf()
-                                .disable()
-                                .build();
+                http
+                                .authorizeExchange(exchanges -> exchanges
+                                                .pathMatchers("/assets/**", "/manifest.json",
+                                                                "/favicon.ico", "/static/**",
+                                                                "/ui/**")
+                                                .permitAll()
+                                                .anyExchange().authenticated())
+
+                                .formLogin(formLogin -> formLogin.loginPage("ui/user/login"))
+                                .logout().logoutSuccessHandler(logoutSuccessHandler()).and().csrf().disable();
+                return http.build();
+                // return http.authorizeExchange()
+                // .anyExchange().authenticated()
+                // .and()
+                // .formLogin().and().//
+                // logout().logoutSuccessHandler(logoutSuccessHandler()).and().csrf()
+                // .disable()
+                // .build();
         }
 
         @Bean

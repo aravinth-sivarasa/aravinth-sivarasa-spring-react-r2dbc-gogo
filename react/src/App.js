@@ -10,7 +10,11 @@ import { IntlProvider } from 'react-intl';
 import AppLocale from './lang';
 import ColorSwitcher from './components/common/ColorSwitcher';
 import { NotificationContainer } from './components/common/react-notifications';
-import { isMultiColorActive, adminRoot } from './constants/defaultValues';
+import {
+  isMultiColorActive,
+  adminRoot,
+  adminUI,
+} from './constants/defaultValues';
 import { getDirection } from './helpers/Utils';
 
 const ViewHome = React.lazy(() =>
@@ -18,6 +22,10 @@ const ViewHome = React.lazy(() =>
 );
 const ViewApp = React.lazy(() =>
   import(/* webpackChunkName: "views-app" */ './views/app')
+);
+
+const ViewUser = React.lazy(() =>
+  import(/* webpackChunkName: "views-app" */ './views/user')
 );
 
 const ViewError = React.lazy(() =>
@@ -57,8 +65,13 @@ class App extends React.Component {
                     path={adminRoot}
                     render={(props) => <ViewApp {...props} />}
                   />
+
                   <Route
-                    path="/error"
+                    path={`${adminUI}/user`}
+                    render={(props) => <ViewUser {...props} />}
+                  />
+                  <Route
+                    path={`${adminUI}/error`}
                     exact
                     render={(props) => <ViewError {...props} />}
                   />
@@ -67,11 +80,11 @@ class App extends React.Component {
                     exact
                     render={(props) => <ViewHome {...props} />}
                   />
-                  <Redirect to="/error" />
+                  <Redirect to={`${adminUI}/error`} />
                   {/*
                   <Redirect exact from="/" to={adminRoot} />
                   */}
-                  <Redirect to="/error" />
+                  <Redirect to={`${adminUI}/error`} />
                 </Switch>
               </Router>
             </Suspense>
