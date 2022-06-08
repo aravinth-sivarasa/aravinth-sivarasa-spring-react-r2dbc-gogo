@@ -33,6 +33,7 @@ public class SecurityConfig {
                                                 .anyExchange().authenticated())
 
                                 .formLogin(formLogin -> formLogin.loginPage("ui/user/login"))
+                                // .formLogin().and()
                                 .logout().logoutSuccessHandler(logoutSuccessHandler()).and().csrf().disable();
                 return http.build();
                 // return http.authorizeExchange()

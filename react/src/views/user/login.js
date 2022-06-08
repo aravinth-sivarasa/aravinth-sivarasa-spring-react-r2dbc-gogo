@@ -3,7 +3,7 @@ import { Row, Card, CardTitle, Label, FormGroup, Button } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { Formik, Form, Field } from 'formik';
+import { Formik, Field } from 'formik';
 import { NotificationManager } from 'components/common/react-notifications';
 
 import { Colxx } from 'components/common/CustomBootstrap';
@@ -30,9 +30,10 @@ const validateEmail = (value) => {
   return error;
 };
 
-const Login = ({ history, loading, error, loginUserAction }) => {
+const Login = ({ loading, error }) => {
   const [email] = useState('demo@gogo.com');
   const [password] = useState('gogo123');
+  const [username] = useState('gogooo');
 
   useEffect(() => {
     if (error) {
@@ -40,15 +41,15 @@ const Login = ({ history, loading, error, loginUserAction }) => {
     }
   }, [error]);
 
-  const onUserLogin = (values) => {
-    if (!loading) {
-      if (values.email !== '' && values.password !== '') {
-        loginUserAction(values, history);
-      }
-    }
-  };
+  // const onUserLogin = (values) => {
+  //   if (!loading) {
+  //     if (values.email !== '' && values.password !== '') {
+  //       loginUserAction(values, history);
+  //     }
+  //   }
+  // };
 
-  const initialValues = { email, password };
+  const initialValues = { email, password, username };
 
   return (
     <Row className="h-100">
@@ -74,9 +75,13 @@ const Login = ({ history, loading, error, loginUserAction }) => {
               <IntlMessages id="user.login-title" />
             </CardTitle>
 
-            <Formik initialValues={initialValues} onSubmit={onUserLogin}>
+            <Formik initialValues={initialValues}>
               {({ errors, touched }) => (
-                <Form className="av-tooltip tooltip-label-bottom">
+                <form
+                  className="av-tooltip tooltip-label-bottom"
+                  action="/login"
+                  method="POST"
+                >
                   <FormGroup className="form-group has-float-label">
                     <Label>
                       <IntlMessages id="user.email" />
@@ -92,6 +97,19 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                       </div>
                     )}
                   </FormGroup>
+
+                  <FormGroup className="form-group has-float-label">
+                    <Label>
+                      <IntlMessages id="user.email" />
+                    </Label>
+                    <Field className="form-control" name="username" />
+                    {errors.email && touched.email && (
+                      <div className="invalid-feedback d-block">
+                        {errors.email}
+                      </div>
+                    )}
+                  </FormGroup>
+
                   <FormGroup className="form-group has-float-label">
                     <Label>
                       <IntlMessages id="user.password" />
@@ -113,6 +131,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                       <IntlMessages id="user.forgot-password-question" />
                     </NavLink>
                     <Button
+                      type="submit"
                       color="primary"
                       className={`btn-shadow btn-multiple-state ${
                         loading ? 'show-spinner' : ''
@@ -129,7 +148,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                       </span>
                     </Button>
                   </div>
-                </Form>
+                </form>
               )}
             </Formik>
           </div>

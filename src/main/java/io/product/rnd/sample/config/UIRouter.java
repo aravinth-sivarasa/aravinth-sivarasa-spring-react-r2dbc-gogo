@@ -11,12 +11,8 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
-import java.util.Optional;
-
 @Configuration(proxyBeanMethods = false)
 public class UIRouter {
-
-    private final String REQUEST_KEY = "org.springframework.web.reactive.function.server.RouterFunctions.request";
 
     @Bean
     public RouterFunction<ServerResponse> ui() {
