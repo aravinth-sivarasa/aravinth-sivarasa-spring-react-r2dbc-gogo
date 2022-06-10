@@ -18,7 +18,11 @@ public class UIRouter {
     public RouterFunction<ServerResponse> ui() {
         return route(GET("/").and(accept(MediaType.ALL)), request -> {
             return ServerResponse.ok().render("index", new ModelMap());
+        }).andRoute(GET("/app/**").and(accept(MediaType.ALL)), request -> {
+            return ServerResponse.ok().render("index", new ModelMap());
         }).andRoute(GET("/ui/**").and(accept(MediaType.ALL)), request -> {
+            return ServerResponse.ok().render("index", new ModelMap());
+        }).andRoute(GET("/error").and(accept(MediaType.ALL)), request -> {
             return ServerResponse.ok().render("index", new ModelMap());
         });
     }

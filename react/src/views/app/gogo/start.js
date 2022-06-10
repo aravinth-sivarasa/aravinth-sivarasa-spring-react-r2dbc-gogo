@@ -15,6 +15,7 @@ const Start = ({ match }) => (
     <Row>
       <Colxx xxs="12" className="mb-4">
         <p>
+          {match.path}
           <IntlMessages id="menu.start" />
         </p>
       </Colxx>

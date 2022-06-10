@@ -79,7 +79,7 @@ const Login = ({ loading, error }) => {
               {({ errors, touched }) => (
                 <form
                   className="av-tooltip tooltip-label-bottom"
-                  action="/login"
+                  action="/ui/user/login"
                   method="POST"
                 >
                   <FormGroup className="form-group has-float-label">

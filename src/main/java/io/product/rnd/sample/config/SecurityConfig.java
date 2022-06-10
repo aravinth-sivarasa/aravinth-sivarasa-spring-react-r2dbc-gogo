@@ -27,22 +27,15 @@ public class SecurityConfig {
                 http
                                 .authorizeExchange(exchanges -> exchanges
                                                 .pathMatchers("/assets/**", "/manifest.json",
-                                                                "/favicon.ico", "/static/**",
-                                                                "/ui/**")
+                                                                "/favicon.ico", "/static/**", "/ui/user/login",
+                                                                "/error")
                                                 .permitAll()
                                                 .anyExchange().authenticated())
 
-                                .formLogin(formLogin -> formLogin.loginPage("ui/user/login"))
+                                .formLogin(formLogin -> formLogin.loginPage("/ui/user/login"))
                                 // .formLogin().and()
                                 .logout().logoutSuccessHandler(logoutSuccessHandler()).and().csrf().disable();
                 return http.build();
-                // return http.authorizeExchange()
-                // .anyExchange().authenticated()
-                // .and()
-                // .formLogin().and().//
-                // logout().logoutSuccessHandler(logoutSuccessHandler()).and().csrf()
-                // .disable()
-                // .build();
         }
 
         @Bean
