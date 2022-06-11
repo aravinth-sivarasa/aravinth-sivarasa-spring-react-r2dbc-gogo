@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import AppLayout from 'layout/AppLayout';
 
 const Gogo = React.lazy(() =>
-  import(/* webpackChunkName: "viwes-gogo" */ './gogo')
+  import(/* webpackChunkName: "viwes-gogo" */ './harvest')
 );
 const SecondMenu = React.lazy(() =>
   import(/* webpackChunkName: "viwes-second-menu" */ './second-menu')
@@ -20,9 +20,13 @@ const Time = ({ match }) => {
       <div className="dashboard-wrapper">
         <Suspense fallback={<div className="loading" />}>
           <Switch>
-            <Redirect exact from={`${match.url}/`} to={`${match.url}/gogo`} />
+            <Redirect
+              exact
+              from={`${match.url}/`}
+              to={`${match.url}/harvest`}
+            />
             <Route
-              path={`${match.url}/gogo`}
+              path={`${match.url}/harvest`}
               render={(props) => <Gogo {...props} />}
             />
             <Route
