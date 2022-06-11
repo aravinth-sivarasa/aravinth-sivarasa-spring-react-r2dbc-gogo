@@ -49,5 +49,6 @@ module.exports = {
   'pages.go-back-home': 'GO BACK HOME',
 
   'menu.time': 'Time',
-  'menu.harvest': 'Harvest',
+  'menu.harvest': 'Income',
+  'harvest.total': 'Total',
 };
