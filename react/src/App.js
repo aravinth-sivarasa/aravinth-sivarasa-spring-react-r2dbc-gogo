@@ -20,6 +20,10 @@ const ViewApp = React.lazy(() =>
   import(/* webpackChunkName: "views-app" */ './views/app')
 );
 
+const ViewTime = React.lazy(() =>
+  import(/* webpackChunkName: "views-app" */ './views/time')
+);
+
 const ViewUser = React.lazy(() =>
   import(/* webpackChunkName: "views-app" */ './views/user')
 );
@@ -61,7 +65,10 @@ class App extends React.Component {
                     path={adminUI}
                     render={(props) => <ViewApp {...props} />}
                   />
-
+                  <Route
+                    path="/ui/time"
+                    render={(props) => <ViewTime {...props} />}
+                  />
                   <Route
                     path="/ui/user"
                     render={(props) => <ViewUser {...props} />}

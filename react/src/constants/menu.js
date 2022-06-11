@@ -17,6 +17,20 @@ const data = [
     ],
   },
   {
+    id: 'time',
+    icon: 'iconsminds-stopwatch',
+    label: 'menu.time',
+    to: `/ui/time/blank-page`,
+    // roles: [UserRole.Admin, UserRole.Editor],
+    subs: [
+      {
+        icon: 'simple-icon-paper-plane',
+        label: 'menu.time',
+        to: `/ui/time/gogo/start`,
+      },
+    ],
+  },
+  {
     id: 'secondmenu',
     icon: 'iconsminds-three-arrow-fork',
     label: 'menu.second-menu',
