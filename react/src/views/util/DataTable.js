@@ -3,15 +3,13 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/display-name */
-import React from 'react';
+/* eslint-disable react/react-in-jsx-scope */
 import { useTable, usePagination, useSortBy } from 'react-table';
 import classnames from 'classnames';
 
 import DatatablePagination from 'components/DatatablePagination';
 
-import products from 'data/products';
-
-function Table({ columns, data, divided = false, defaultPageSize = 6 }) {
+function DataTable({ columns, data, divided = false, defaultPageSize = 6 }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -101,41 +99,4 @@ function Table({ columns, data, divided = false, defaultPageSize = 6 }) {
   );
 }
 
-export const ReactTableDivided = () => {
-  const cols = React.useMemo(
-    () => [
-      {
-        Header: 'Name',
-        accessor: 'title',
-        cellClass: 'list-item-heading w-40',
-        Cell: (props) => <>{props.value}</>,
-      },
-      {
-        Header: 'Sales',
-        accessor: 'sales',
-        cellClass: 'text-muted  w-10',
-        Cell: (props) => <>{props.value}</>,
-      },
-      {
-        Header: 'Stock',
-        accessor: 'stock',
-        cellClass: 'text-muted  w-10',
-        Cell: (props) => <>{props.value}</>,
-      },
-      {
-        Header: 'Category',
-        accessor: 'category',
-        cellClass: 'text-muted  w-40',
-        Cell: (props) => <>{props.value}</>,
-      },
-    ],
-    []
-  );
-  return (
-    <div className="mb-4">
-      <Table columns={cols} data={products} divided />
-    </div>
-  );
-};
-
-export default ReactTableDivided;
+export default DataTable;

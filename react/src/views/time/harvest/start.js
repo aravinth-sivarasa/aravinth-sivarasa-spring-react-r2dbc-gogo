@@ -5,7 +5,7 @@ import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import Breadcrumb from 'containers/navs/Breadcrumb';
 import { Row } from 'reactstrap'; //
 
-import { ReactTableDivided } from '../../util/react-table-divided';
+import { ReactTableDivided } from './react-table-divided';
 
 const data = [
   {
