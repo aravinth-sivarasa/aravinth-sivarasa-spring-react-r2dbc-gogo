@@ -13,7 +13,7 @@ const WorkLogTblHeader = () => [
   },
   {
     Header: 'Location',
-    accessor: 'title',
+    accessor: 'name',
     cellClass: 'text-muted  w-40',
     Cell: (props) => <>{props.value}</>,
   },
