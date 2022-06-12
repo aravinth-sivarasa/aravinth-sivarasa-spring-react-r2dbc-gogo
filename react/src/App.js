@@ -13,9 +13,6 @@ import { NotificationContainer } from './components/common/react-notifications';
 import { isMultiColorActive, adminUI } from './constants/defaultValues';
 import { getDirection } from './helpers/Utils';
 
-// const ViewHome = React.lazy(() =>
-//   import(/* webpackChunkName: "views" */ './views/home')
-// );
 const ViewApp = React.lazy(() =>
   import(/* webpackChunkName: "views-app" */ './views/app')
 );
