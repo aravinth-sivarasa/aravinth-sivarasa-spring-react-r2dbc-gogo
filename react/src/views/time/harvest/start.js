@@ -3,8 +3,9 @@ import React from 'react';
 import IconCard from 'components/cards/IconCard';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import Breadcrumb from 'containers/navs/Breadcrumb';
-import { Card, CardBody, CardTitle, Row } from 'reactstrap'; //
-import IntlMessages from 'helpers/IntlMessages';
+import { Row } from 'reactstrap'; //
+
+import { ReactTableDivided } from '../../util/react-table-divided';
 
 const data = [
   {
@@ -34,14 +35,7 @@ const Start = ({ match }) => (
         </Row>
       </Colxx>
       <Colxx xl="6" lg="12" className="mb-4">
-        <Card className="h-100">
-          <CardBody>
-            <CardTitle>
-              <IntlMessages id="dashboards.best-sellers" />
-            </CardTitle>
-            {/* <DataTable columns={cols} data={products} /> */}
-          </CardBody>
-        </Card>
+        <ReactTableDivided />
       </Colxx>
     </Row>
   </>
