@@ -8,6 +8,8 @@ import IntlMessages from 'helpers/IntlMessages';
 import { ReactTableDivided } from './react-table-divided';
 import WorklogAddModal from './worklog-add-modal';
 
+import 'react-datepicker/dist/react-datepicker.css';
+
 const data = [
   {
     title: 'harvest.total',
