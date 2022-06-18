@@ -1,12 +1,15 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
+import IntlMessages from 'helpers/IntlMessages';
 import WorklogAdd from './worklog-add';
 
 const WorklogAddModal = ({ showModal, closeModal }) => {
   return (
     <Modal isOpen={showModal} toggle={() => closeModal(!showModal)}>
-      <ModalHeader>Modal title</ModalHeader>
+      <ModalHeader>
+        {' '}
+        <IntlMessages id="worklog.add.modal.title" />
+      </ModalHeader>
       <ModalBody>
         {' '}
         <WorklogAdd />

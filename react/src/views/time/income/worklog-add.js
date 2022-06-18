@@ -23,8 +23,9 @@ const selectData = [
 
 const WorklogAdd = () => {
   const [startDateTime, setStartDateTime] = useState(new Date());
+  const [endDateTime, setEndDateTime] = useState(new Date());
 
-  const [selectedOptionLT, setSelectedOptionLT] = useState('');
+  const [selectedWorkplace, setSelectedWorkplace] = useState('');
   const createNotification = (type, className) => {
     const cName = className || '';
     switch (type) {
@@ -93,13 +94,13 @@ const WorklogAdd = () => {
       <Row className="mb-5">
         <Colxx xxs="12">
           <label>
-            <IntlMessages id="form-components.date-with-time" />
+            <IntlMessages id="worklog.add.model.detail" />
           </label>
 
           <Form>
             <FormGroup className="form-group has-top-label">
               <Label>
-                <IntlMessages id="forms.date-u" />
+                <IntlMessages id="worklog.add.model.date.start" />
               </Label>
 
               <DatePicker
@@ -110,35 +111,37 @@ const WorklogAdd = () => {
                 timeFormat="HH:mm"
                 timeIntervals={15}
                 timeCaption="Time"
+                dateFormat="MMMM d, yyyy h:mm aa"
               />
             </FormGroup>
             <FormGroup className="form-group has-top-label">
               <Label>
-                <IntlMessages id="forms.date-u" />
+                <IntlMessages id="worklog.add.model.date.end" />
               </Label>
 
               <DatePicker
-                selected={startDateTime}
-                onChange={setStartDateTime}
+                selected={endDateTime}
+                onChange={setEndDateTime}
                 placeholderText={<IntlMessages id="forms.date" />}
                 showTimeSelect
                 timeFormat="HH:mm"
                 timeIntervals={15}
                 timeCaption="Time"
+                dateFormat="MMMM d, yyyy h:mm aa"
               />
             </FormGroup>
 
             <FormGroup className="form-group has-top-label">
               <Label>
-                <IntlMessages id="forms.state-u" />
+                <IntlMessages id="worklog.add.model.workplace" />
               </Label>
               <Select
                 components={{ Input: CustomSelectInput }}
                 className="react-select"
                 classNamePrefix="react-select"
                 name="form-field-name"
-                value={selectedOptionLT}
-                onChange={(val) => setSelectedOptionLT(val)}
+                value={selectedWorkplace}
+                onChange={(val) => setSelectedWorkplace(val)}
                 options={selectData}
                 placeholder=""
               />
@@ -148,7 +151,7 @@ const WorklogAdd = () => {
               color="primary"
               onClick={() => createNotification('success', 'filled')}
             >
-              <IntlMessages id="forms.submit" />
+              <IntlMessages id="worklog.add.model.btn.add" />
             </Button>
           </Form>
         </Colxx>

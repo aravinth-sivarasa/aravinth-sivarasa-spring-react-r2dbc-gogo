@@ -49,6 +49,13 @@ module.exports = {
   'pages.go-back-home': 'GO BACK HOME',
 
   'menu.time': 'Time',
-  'menu.harvest': 'Income',
-  'harvest.total': 'Total',
+  'menu.income': 'Income',
+  'income.total': 'Total',
+  'income.btn.popup.add': 'Add income',
+  'worklog.add.modal.title': 'Work log',
+  'worklog.add.model.detail': 'Add worklog details',
+  'worklog.add.model.date.start': 'Start date',
+  'worklog.add.model.date.end': 'End date',
+  'worklog.add.model.workplace': 'Workplace',
+  'worklog.add.model.btn.add': 'Add time',
 };

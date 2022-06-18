@@ -9,8 +9,8 @@ const data = [
     subs: [
       {
         icon: 'iconsminds-forest-1',
-        label: 'menu.harvest',
-        to: `/ui/time/harvest`,
+        label: 'menu.income',
+        to: `/ui/time/income`,
       },
     ],
   },

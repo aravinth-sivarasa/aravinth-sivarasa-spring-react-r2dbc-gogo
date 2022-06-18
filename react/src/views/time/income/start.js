@@ -12,7 +12,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const data = [
   {
-    title: 'harvest.total',
+    title: 'income.total',
     value: 74,
   },
 ];
@@ -23,7 +23,7 @@ export const Start = ({ match }) => {
     <>
       <Row>
         <Colxx xxs="12">
-          <Breadcrumb heading="menu.harvest" match={match} />
+          <Breadcrumb heading="menu.income" match={match} />
           <Separator className="mb-5" />
         </Colxx>
       </Row>
@@ -44,7 +44,7 @@ export const Start = ({ match }) => {
               outline
               onClick={() => setShowWorklogAddModal(true)}
             >
-              <IntlMessages id="modal.launch-demo-modal" />
+              <IntlMessages id="income.btn.popup.add" />
             </Button>
             <WorklogAddModal
               showModal={showWorklogAddModal}
