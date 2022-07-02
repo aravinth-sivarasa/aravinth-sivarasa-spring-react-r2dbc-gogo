@@ -23,18 +23,15 @@ import java.net.URI;
 public class SecurityConfig {
 
         @Bean
-        SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) {
-                http
-                                .authorizeExchange(exchanges -> exchanges
-                                                .pathMatchers("/assets/**", "/manifest.json",
-                                                                "/favicon.ico", "/static/**", "/ui/user/login",
-                                                                "/error")
-                                                .permitAll()
-                                                .anyExchange().authenticated())
-
-                                .formLogin(formLogin -> formLogin.loginPage("/ui/user/login"))
-                                // .formLogin().and()
-                                .logout().logoutSuccessHandler(logoutSuccessHandler()).and().csrf().disable();
+        public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+                http.authorizeExchange(exchanges -> exchanges
+                                .pathMatchers("/assets/**", "/manifest.json",
+                                                "/favicon.ico", "/static/**", "/ui/user/login",
+                                                "/error")
+                                .permitAll()
+                                .anyExchange().authenticated())
+                                .httpBasic().and()
+                                .formLogin(formLogin -> formLogin.loginPage("/ui/user/login")).csrf().disable();
                 return http.build();
         }
 
