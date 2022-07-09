@@ -11,7 +11,7 @@
     <artifactId>product-rnd</artifactId>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
     </properties>
     <dependencies>
         <dependency>
