@@ -1,0 +1,25 @@
+
+CREATE TABLE IF NOT EXISTS "bn_role" (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS "bn_user" (
+    id SERIAL,
+    code VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    CONSTRAINT bn_user_pk PRIMARY KEY (id)
+
+);
+
+ALTER TABLE "bn_user" DROP CONSTRAINT IF EXISTS bn_user_role_fk;
+ALTER TABLE IF EXISTS "bn_user"
+    ADD IF NOT EXISTS role_id INTEGER,
+    ADD CONSTRAINT bn_user_role_fk FOREIGN KEY (role_id)
+    REFERENCES bn_role (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+CREATE INDEX IF NOT EXISTS bn_user_role_idx
+    ON bn_user(role_id);
+
