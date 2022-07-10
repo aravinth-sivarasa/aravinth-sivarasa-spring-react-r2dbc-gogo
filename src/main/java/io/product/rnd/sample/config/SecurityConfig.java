@@ -37,35 +37,36 @@ public class SecurityConfig {
                                                                 "/error")
                                                 .permitAll()
                                                 .anyExchange().authenticated())
-
+                                .httpBasic().and()
                                 .formLogin(formLogin -> formLogin.loginPage("/ui/user/login"))
                                 // .formLogin().and()
                                 .logout().logoutSuccessHandler(logoutSuccessHandler()).and().csrf().disable();
                 return http.build();
         }
 
-        // @Bean
-        // @DependsOn({ "initializer", "encoder" })
-        // ReactiveUserDetailsService reactiveUserDetailsService() {
-        // return new BNUserHandler();
-        // }
-
         @Bean
-        public ReactiveUserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-                UserDetails admin = User
-                                .withUsername("admin")
-                                .password(passwordEncoder.encode("admin"))
-                                .roles("ADMIN", "MEMBER")
-                                .build();
-
-                UserDetails caterpillar = User
-                                .withUsername("caterpillar")
-                                .password(passwordEncoder.encode("admin"))
-                                .roles("MEMBER")
-                                .build();
-
-                return new MapReactiveUserDetailsService(admin, caterpillar);
+        @DependsOn({ "initializer", "encoder" })
+        BNUserHandler reactiveUserDetailsService() {
+                return new BNUserHandler();
         }
+
+        // @Bean
+        // public ReactiveUserDetailsService userDetailsService(PasswordEncoder
+        // passwordEncoder) {
+        // UserDetails admin = User
+        // .withUsername("admin")
+        // .password(passwordEncoder.encode("admin"))
+        // .roles("ADMIN", "MEMBER")
+        // .build();
+
+        // UserDetails caterpillar = User
+        // .withUsername("caterpillar")
+        // .password(passwordEncoder.encode("admin"))
+        // .roles("MEMBER")
+        // .build();
+
+        // return new MapReactiveUserDetailsService(admin, caterpillar);
+        // }
 
         @Bean
         public PasswordEncoder encoder() {

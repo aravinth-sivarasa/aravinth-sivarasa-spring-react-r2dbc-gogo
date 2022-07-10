@@ -13,7 +13,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 @Configuration(proxyBeanMethods = false)
 public class BNUserRouter {
 
-    // @Bean
+    @Bean
     public RouterFunction<ServerResponse> user(BNUserHandler greetingHandler) {
         return route(GET(UserEndpoints.GET_USER_BY_CODE_V1).and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.ok().body(greetingHandler.fetch(request),

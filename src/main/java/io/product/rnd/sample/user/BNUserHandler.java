@@ -37,7 +37,7 @@ public class BNUserHandler implements ReactiveUserDetailsService, ReactiveUserDe
     public void init() {
         try {
             BNUser user = new BNUser("admin", encoder.encode("admin"));
-            // addUser(user);
+            addUser(user);
         } catch (RuntimeException e) {
             log.warn(e.getMessage());
         }
