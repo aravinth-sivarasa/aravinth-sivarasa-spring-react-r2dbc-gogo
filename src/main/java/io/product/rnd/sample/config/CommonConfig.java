@@ -19,7 +19,7 @@ public class CommonConfig {
 
     private static final String REQUEST_ID_KEY = "request-id";
 
-    @Bean
+    // @Bean
     WebFilter handleRequestAndResponse() {
         return (exchange, next) -> next.filter(exchange)
                 .doFirst(() -> exchange.getAttributes().put(REQUEST_ID_KEY, UUID.randomUUID().toString()))

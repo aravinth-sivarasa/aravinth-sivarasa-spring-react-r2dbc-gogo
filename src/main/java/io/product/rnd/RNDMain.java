@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.r2dbc.connection.init.ConnectionFactoryInitializer;
+import org.springframework.r2dbc.connection.init.DatabasePopulator;
 import org.springframework.r2dbc.connection.init.ResourceDatabasePopulator;
 
 import io.r2dbc.spi.ConnectionFactory;
@@ -17,10 +18,16 @@ public class RNDMain {
 
     @Bean
     ConnectionFactoryInitializer initializer(ConnectionFactory connectionFactory) {
-
         ConnectionFactoryInitializer initializer = new ConnectionFactoryInitializer();
         initializer.setConnectionFactory(connectionFactory);
-        initializer.setDatabasePopulator(new ResourceDatabasePopulator(new ClassPathResource("schema.sql")));
+        initializer.setDatabasePopulator(datebasePopulator());
         return initializer;
+    }
+
+    private DatabasePopulator datebasePopulator() {
+        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
+        resourceDatabasePopulator.addScript(new ClassPathResource("schema.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("BNUserDB.sql"));
+        return resourceDatabasePopulator;
     }
 }
