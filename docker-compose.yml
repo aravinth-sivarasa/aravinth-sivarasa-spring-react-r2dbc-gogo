@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  webapp:
+    container_name: webapp
+    ports:
+      - 8080:8080
+    build:
+      context: .
+      dockerfile: Dockerfile
+  db:
+    container_name: postgresdb
+    image: postgres:latest
+    restart: unless-stopped
+
+    volumes:
+      - ./data/pg:/var/lib/postgresql/data
+    environment:
+      # NOTE: POSTGRES_DB/USER/PASSWORD should match values in app container
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)

@@ -72,3 +72,4 @@ target
 src/main/resources/templates/index.html
 **/package-lock.json
 .vscode
+data/pg
