@@ -1,10 +1,10 @@
-spring:
-  profiles:
-    active:
-      - dev-db-pg
-  r2dbc:
-    url: r2dbc:postgresql://postgres:postgres@localhost:7432/postgres
-    pool:
-      enabled: true
-      # initial-size: 5
-      # max-size: 10
+# spring:
+#   profiles:
+#     active:
+#       - dev-db-pg
+#   r2dbc:
+#     url: r2dbc:postgresql://postgres:postgres@localhost:7432/postgres
+#     pool:
+#       enabled: true
+# initial-size: 5
+# max-size: 10

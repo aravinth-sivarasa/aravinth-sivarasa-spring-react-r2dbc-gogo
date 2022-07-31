@@ -14,9 +14,9 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 public class BNUserRouter {
 
     @Bean
-    public RouterFunction<ServerResponse> user(BNUserHandler greetingHandler) {
+    public RouterFunction<ServerResponse> user(BNUserHandler bnUserHandler) {
         return route(GET(UserEndpoints.GET_USER_BY_CODE_V1).and(accept(MediaType.APPLICATION_JSON)),
-                request -> ServerResponse.ok().body(greetingHandler.fetch(request),
+                request -> ServerResponse.ok().body(bnUserHandler.fetch(request),
                         BNUser.class));
     }
 }
