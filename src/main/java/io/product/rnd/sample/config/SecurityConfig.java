@@ -46,24 +46,6 @@ public class SecurityConfig {
                 return new BNUserHandler();
         }
 
-        // @Bean
-        // public ReactiveUserDetailsService userDetailsService(PasswordEncoder
-        // passwordEncoder) {
-        // UserDetails admin = User
-        // .withUsername("admin")
-        // .password(passwordEncoder.encode("admin"))
-        // .roles("ADMIN", "MEMBER")
-        // .build();
-
-        // UserDetails caterpillar = User
-        // .withUsername("caterpillar")
-        // .password(passwordEncoder.encode("admin"))
-        // .roles("MEMBER")
-        // .build();
-
-        // return new MapReactiveUserDetailsService(admin, caterpillar);
-        // }
-
         @Bean
         public PasswordEncoder encoder() {
                 return new BCryptPasswordEncoder();

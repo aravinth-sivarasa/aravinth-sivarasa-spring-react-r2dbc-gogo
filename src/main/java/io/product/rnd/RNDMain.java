@@ -3,6 +3,7 @@ package io.product.rnd;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.r2dbc.connection.init.ConnectionFactoryInitializer;
 import org.springframework.r2dbc.connection.init.DatabasePopulator;
 import org.springframework.r2dbc.connection.init.ResourceDatabasePopulator;
@@ -25,8 +26,9 @@ public class RNDMain {
 
     private DatabasePopulator datebasePopulator() {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-        // resourceDatabasePopulator.addScript(new ClassPathResource("schema.sql"));
-        // resourceDatabasePopulator.addScript(new ClassPathResource("BNUserDB.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("schema.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("io/product/rnd/sample/user/BNUser.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("io/product/rnd/sample/asset/domain/Asset.sql"));
         return resourceDatabasePopulator;
     }
 }

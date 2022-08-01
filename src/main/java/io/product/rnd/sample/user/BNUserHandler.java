@@ -1,5 +1,7 @@
 package io.product.rnd.sample.user;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.security.core.userdetails.ReactiveUserDetailsPassword
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.server.ServerRequest;
 
 import reactor.core.publisher.Flux;
@@ -21,7 +24,6 @@ public class BNUserHandler implements ReactiveUserDetailsService, ReactiveUserDe
     @Autowired
     private PasswordEncoder encoder;
 
-    // @Transactional
     public void addUser(BNUser user) {
         userCRUD.findByCode(user.getCode())//
                 .doOnNext(value -> {
@@ -31,11 +33,11 @@ public class BNUserHandler implements ReactiveUserDetailsService, ReactiveUserDe
 
     }
 
-    // @PostConstruct
+    @PostConstruct
     public void init() {
         try {
             BNUser user = new BNUser("admin", encoder.encode("admin"));
-            addUser(user);
+            this.addUser(user);
         } catch (RuntimeException e) {
             log.warn(e.getMessage());
         }
@@ -43,7 +45,9 @@ public class BNUserHandler implements ReactiveUserDetailsService, ReactiveUserDe
 
     @Override
     public Mono<UserDetails> findByUsername(String username) {
-        return userCRUD.findByCode(username);
+        return userCRUD.findByCode(username).doOnNext(object -> {
+            log.info("User: {}, found in database ", object.getUsername());
+        });
     }
 
     public Flux<BNUser> fetch(ServerRequest request) {

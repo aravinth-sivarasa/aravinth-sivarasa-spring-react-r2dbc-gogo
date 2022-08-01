@@ -23,8 +23,11 @@ public class GreetingHandler {
     public Mono<Greeting> add(ServerRequest request) {
 
         return request.bodyToMono(Greeting.class)//
-                .doFirst(() -> log.info("request-id: {}", request.attribute("request-id").get()))
-                .flatMap(greeting -> greetingRepository.save(greeting));
+                .doFirst(() -> log.info("request-id: {}", request.attributes()))
+                .flatMap(greeting -> {
+                    log.info("Received value {}", greeting);
+                    return greetingRepository.save(greeting);
+                });
     }
 
     public Flux<Greeting> fetch(ServerRequest request) {
