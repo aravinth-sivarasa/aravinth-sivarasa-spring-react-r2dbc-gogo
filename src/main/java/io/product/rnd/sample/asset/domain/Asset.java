@@ -1,6 +1,7 @@
 package io.product.rnd.sample.asset.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -16,6 +17,9 @@ public class Asset {
     private String code;
     private String description;
     private Long assetTypeId;
+
+    @Transient
+    private String assetTypeCode;
 
     public String getCode() {
         return code;
@@ -60,6 +64,14 @@ public class Asset {
 
     public void setAssetTypeId(Long assetTypeId) {
         this.assetTypeId = assetTypeId;
+    }
+
+    public String getAssetTypeCode() {
+        return assetTypeCode;
+    }
+
+    public void setAssetTypeCode(String assetTypeCode) {
+        this.assetTypeCode = assetTypeCode;
     }
 
 }

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -48,20 +49,28 @@ public class AssetHandler {
 
     @Transactional
     public Mono<ServerResponse> update(ServerRequest request) {
-        return request.bodyToMono(Asset.class)//
-                .flatMap(value -> {
-                    printInfoLog(request, "request_body =" + value);
-                    if (value.getCode() == null) {
-                        value.setCode(UUID.randomUUID().toString());
-                    }
-                    value.setAssetTypeId(1l);
-                    printInfoLog(request, "repo value =" + value);
-                    Mono<Asset> repResponse = assetRepository.save(value);
-                    return repResponse.flatMap(savedValue -> {
-                        return ServerResponse.ok().body(Mono.empty(),
-                                String.class);
-                    });
+        return request.bodyToMono(Asset.class).flatMap(asset -> {
+            printInfoLog(request, "request_body =" + asset);
+            return validateAssetType(asset.getAssetTypeCode()).flatMap(assetType -> {
+                return verifyAndSaveAsset(asset, assetType).flatMap(savedValue -> {
+                    return ServerResponse.ok().body(Mono.just(savedValue.getCode()),
+                            String.class);
                 });
+            });
+        });
+    }
+
+    private Mono<Asset> verifyAndSaveAsset(Asset asset, AssetType assetType) {
+        asset.setAssetTypeId(assetType.getId());
+        if (asset.getCode() == null) {
+            asset.setCode(UUID.randomUUID().toString());
+        }
+        return assetRepository.save(asset)
+                .switchIfEmpty(Mono.error(new RuntimeException("Asset type not found for " + asset)));
+    }
+
+    private Mono<AssetType> validateAssetType(String code) {
+        return assetTypeRepository.findByCode(code);
     }
 
     public Mono<ServerResponse> fetchLandingPage(ServerRequest request) {
@@ -75,7 +84,7 @@ public class AssetHandler {
 
     private void printInfoLog(ServerRequest request, String msg) {
         log.info("log-id= \"{}\",{}",
-                request.attribute("org.springframework.web.server.ServerWebExchange.LOG_ID").get(),
+                request.attribute("org.springframework.web.server.ServerWebExchange.LOG_ID").orElse("NA"),
                 msg);
     }
 }
