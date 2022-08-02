@@ -13,16 +13,23 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 @Configuration(proxyBeanMethods = false)
 public class AssetRouter {
 
-    private static final String RESOURCE_URL = "/v1/asset";
+        private static final String RESOURCE_URL = "/v1/asset";
 
-    @Bean
-    public RouterFunction<ServerResponse> asset(AssetHandler assetHandler) {
-
-        return route()
-                .GET(RESOURCE_URL + "/landing-page",
-                        assetHandler::fetchLandingPage)
-                .POST(RESOURCE_URL, accept((MediaType.APPLICATION_JSON)),
-                        assetHandler::update)
-                .build();
-    }
+        @Bean
+        public RouterFunction<ServerResponse> asset(AssetHandler assetHandler) {
+                return route()
+                                .GET(RESOURCE_URL + "/landing-page",
+                                                assetHandler::fetchLandingPage)
+                                .GET(RESOURCE_URL,
+                                                assetHandler::fetchAll)
+                                .GET(RESOURCE_URL + "/{code}",
+                                                assetHandler::fetch)
+                                .DELETE(RESOURCE_URL + "/{code}",
+                                                assetHandler::delete)
+                                .POST(RESOURCE_URL, accept((MediaType.APPLICATION_JSON)),
+                                                assetHandler::update)
+                                .PUT(RESOURCE_URL, accept((MediaType.APPLICATION_JSON)),
+                                                assetHandler::update)
+                                .build();
+        }
 }
