@@ -54,7 +54,7 @@ public class AssetHandler {
 
     @Transactional
     public Mono<ServerResponse> update(ServerRequest request) {
-        boolean hasCode = methodCheck(request);
+        boolean hasCode = isPUT(request);
         return request.bodyToMono(Asset.class).flatMap(asset -> {
             printInfoLog(request, "request_body =" + asset);
             return validateAssetType(asset.getAssetTypeCode())
@@ -67,7 +67,7 @@ public class AssetHandler {
         });
     }
 
-    private boolean methodCheck(ServerRequest request) {
+    private boolean isPUT(ServerRequest request) {
         return request.attribute("org.springframework.web.reactive.function.server.RouterFunctions.request")
                 .orElse("N/A").toString()
                 .indexOf("PUT") != -1;
