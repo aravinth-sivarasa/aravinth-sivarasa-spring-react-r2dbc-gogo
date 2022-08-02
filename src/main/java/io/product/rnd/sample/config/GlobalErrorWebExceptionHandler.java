@@ -1,14 +1,10 @@
 package io.product.rnd.sample.config;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.web.WebProperties;
-import org.springframework.boot.autoconfigure.web.WebProperties.Resources;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
@@ -16,8 +12,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.codec.HttpMessageWriter;
-import org.springframework.http.codec.ResourceHttpMessageWriter;
 import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -32,6 +26,7 @@ import reactor.core.publisher.Mono;
 @Component
 @Order(-2)
 public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHandler {
+    private static Logger log = LoggerFactory.getLogger(GlobalErrorWebExceptionHandler.class);
 
     public GlobalErrorWebExceptionHandler(ErrorAttributes errorAttributes, WebProperties.Resources resourceProperties,
             ApplicationContext applicationContext, ServerCodecConfigurer configurer) {
@@ -42,17 +37,21 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
     @Override
     protected RouterFunction<ServerResponse> getRoutingFunction(
             ErrorAttributes errorAttributes) {
-
         return RouterFunctions.route(
-                RequestPredicates.all(), this::renderErrorResponse);
+                RequestPredicates.all(), request -> renderErrorResponse(request, errorAttributes));
     }
 
     private Mono<ServerResponse> renderErrorResponse(
-            ServerRequest request) {
-
+            ServerRequest request, ErrorAttributes errorAttributes) {
+        Throwable t = errorAttributes.getError(request);
+        final Map<String, Object> errorPropertiesMap = errorAttributes.getErrorAttributes(request,
+                ErrorAttributeOptions.defaults());
+        errorPropertiesMap.put("error", t.getMessage());
+        errorPropertiesMap.put("status", HttpStatus.BAD_REQUEST.value());
+        log.error("log-id=\"{}\", response={}", errorPropertiesMap.get("requestId"), errorPropertiesMap);
         return ServerResponse.status(HttpStatus.BAD_REQUEST)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue("errorPropertiesMap"));
+                .body(BodyInserters.fromValue(errorPropertiesMap));
     }
 
 }

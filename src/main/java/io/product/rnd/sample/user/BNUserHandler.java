@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.ReactiveUserDetailsPassword
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.server.ServerRequest;
 
 import reactor.core.publisher.Flux;
