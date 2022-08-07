@@ -6,5 +6,3 @@ spring:
     url: r2dbc:postgresql://postgres:postgres@localhost:7432/postgres
     pool:
       enabled: true
-      # initial-size: 5
-      # max-size: 10

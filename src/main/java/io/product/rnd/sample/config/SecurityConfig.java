@@ -10,10 +10,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
-import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -34,7 +30,7 @@ public class SecurityConfig {
                                 .authorizeExchange(exchanges -> exchanges
                                                 .pathMatchers("/assets/**", "/manifest.json",
                                                                 "/favicon.ico", "/static/**", "/ui/user/login",
-                                                                "/error")
+                                                                "/error", "/v1/barcode/**")
                                                 .permitAll()
                                                 .anyExchange().authenticated())
                                 .httpBasic().and()
@@ -49,24 +45,6 @@ public class SecurityConfig {
         BNUserHandler reactiveUserDetailsService() {
                 return new BNUserHandler();
         }
-
-        // @Bean
-        // public ReactiveUserDetailsService userDetailsService(PasswordEncoder
-        // passwordEncoder) {
-        // UserDetails admin = User
-        // .withUsername("admin")
-        // .password(passwordEncoder.encode("admin"))
-        // .roles("ADMIN", "MEMBER")
-        // .build();
-
-        // UserDetails caterpillar = User
-        // .withUsername("caterpillar")
-        // .password(passwordEncoder.encode("admin"))
-        // .roles("MEMBER")
-        // .build();
-
-        // return new MapReactiveUserDetailsService(admin, caterpillar);
-        // }
 
         @Bean
         public PasswordEncoder encoder() {

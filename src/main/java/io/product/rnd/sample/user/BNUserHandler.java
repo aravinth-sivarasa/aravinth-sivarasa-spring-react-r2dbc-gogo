@@ -23,7 +23,6 @@ public class BNUserHandler implements ReactiveUserDetailsService, ReactiveUserDe
     @Autowired
     private PasswordEncoder encoder;
 
-    // @Transactional
     public void addUser(BNUser user) {
         userCRUD.findByCode(user.getCode())//
                 .doOnNext(value -> {
@@ -37,7 +36,7 @@ public class BNUserHandler implements ReactiveUserDetailsService, ReactiveUserDe
     public void init() {
         try {
             BNUser user = new BNUser("admin", encoder.encode("admin"));
-            addUser(user);
+            this.addUser(user);
         } catch (RuntimeException e) {
             log.warn(e.getMessage());
         }
@@ -45,7 +44,9 @@ public class BNUserHandler implements ReactiveUserDetailsService, ReactiveUserDe
 
     @Override
     public Mono<UserDetails> findByUsername(String username) {
-        return userCRUD.findByCode(username);
+        return userCRUD.findByCode(username).doOnNext(object -> {
+            log.info("User: {}, found in database ", object.getUsername());
+        });
     }
 
     public Flux<BNUser> fetch(ServerRequest request) {
