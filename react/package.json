@@ -13,7 +13,7 @@
     "caniuse-lite": "^1.0.30001342",
     "chart.js": "2.9.4",
     "classnames": "2.3.1",
-    "firebase": "^8.6.5",
+    "firebase": "^10.2.0",
     "formik": "^2.2.9",
     "moment": "^2.29.3",
     "mousetrap": "^1.6.5",
